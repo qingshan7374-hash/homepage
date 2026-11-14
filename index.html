@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>青山 · A-Qing — 把想法写成能跑的东西</title>
+<meta name="description" content="青山的个人主页：AI Agent、自动化、three.js 与一些没人要的小工具。" />
+<meta name="theme-color" content="#05060a" />
+<meta property="og:title" content="青山 · A-Qing" />
+<meta property="og:description" content="把想法写成能跑的东西。" />
+<meta property="og:type" content="website" />
+<meta property="og:image" content="assets/og.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://unpkg.com" />
+<link rel="stylesheet" href="css/main.css" />
+</head>
+<body class="is-loading">
+
+<!-- 载入遮罩 -->
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="loader__mark">青</div>
+  <div class="loader__bar"><span id="loaderBar"></span></div>
+  <div class="loader__pct" id="loaderPct">0%</div>
+</div>
+
+<!-- 底噪 & 光标 -->
+<div class="grain" aria-hidden="true"></div>
+<div class="cursor" id="cursor" aria-hidden="true"><span class="cursor__dot"></span><span class="cursor__ring"></span></div>
+<div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+
+<!-- 导航 -->
+<header class="nav" id="nav">
+  <a class="nav__brand" href="#top" data-cursor="link">
+    <span class="nav__glyph">青</span>
+    <span class="nav__word">A-Qing</span>
+  </a>
+  <nav class="nav__links" aria-label="主导航">
+    <a href="#about" data-cursor="link">关于</a>
+    <a href="#works" data-cursor="link">作品</a>
+    <a href="#skills" data-cursor="link">手艺</a>
+    <a href="#play" data-cursor="link">玩一下</a>
+    <a href="#contact" data-cursor="link">联系</a>
+  </nav>
+  <div class="nav__right">
+    <button class="nav__cmd" id="openPalette" type="button" aria-label="打开命令面板">
+      <svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path d="M10 4a6 6 0 1 0 3.6 10.8l4.8 4.8 1.4-1.4-4.8-4.8A6 6 0 0 0 10 4zm0 2a4 4 0 1 1 0 8 4 4 0 0 1 0-8z" fill="currentColor"/></svg>
+      <span>⌘K</span>
+    </button>
+    <button class="nav__burger" id="burger" type="button" aria-label="菜单" aria-expanded="false">
+      <span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <canvas id="heroCanvas" class="hero__canvas" aria-hidden="true"></canvas>
+    <div class="hero__veil" aria-hidden="true"></div>
+    <div class="hero__inner">
+      <p class="eyebrow" data-reveal>
+        <span class="eyebrow__dot"></span> 独立开发者 · 芜湖 · <span id="clock">--:--</span>
+      </p>
+      <h1 class="hero__title" data-reveal>
+        <span class="hero__title-line">把想法写成</span>
+        <span class="hero__title-line hero__title-line--accent">能跑的东西。</span>
+      </h1>
+      <p class="hero__lead" data-reveal>
+        我是青山，朋友叫我阿青。<br />
+        白天写代码，晚上折腾 AI——自动化、机器人、三维房间，还有一堆没人要的小工具。
+      </p>
+      <div class="hero__actions" data-reveal>
+        <a class="btn btn--solid" href="#works" data-cursor="link" data-magnetic>
+          <span>看看我做了什么</span>
+          <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M5 12h12m0 0-5-5m5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a class="btn btn--ghost" href="#play" data-cursor="link" data-magnetic>玩一下粒子</a>
+      </div>
+      <dl class="hero__facts" data-reveal>
+        <div><dt>在做</dt><dd>Agent 工具链</dd></div>
+        <div><dt>最近</dt><dd>3D 房间 &amp; 粒子</dd></div>
+        <div><dt>状态</dt><dd><span class="pulse"></span>在线</dd></div>
+      </dl>
+    </div>
+    <div class="hero__scroll" aria-hidden="true"><span></span>向下</div>
+    <div class="hero__name" aria-hidden="true">青山</div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__track">
+      <span>TYPE·SCRIPT</span><i>✦</i><span>NODE</span><i>✦</i><span>THREE.JS</span><i>✦</i><span>WEBGL</span><i>✦</i><span>AI AGENT</span><i>✦</i><span>AUTOMATION</span><i>✦</i>
+      <span>TYPE·SCRIPT</span><i>✦</i><span>NODE</span><i>✦</i><span>THREE.JS</span><i>✦</i><span>WEBGL</span><i>✦</i><span>AI AGENT</span><i>✦</i><span>AUTOMATION</span><i>✦</i>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section class="section about" id="about">
+    <div class="section__head">
+      <span class="section__index">01</span>
+      <h2 class="section__title" data-reveal>关于</h2>
+      <p class="section__note" data-reveal>不太会自我介绍，就说说平时在干嘛。</p>
+    </div>
+    <div class="about__grid">
+      <div class="about__text">
+        <p data-reveal>我叫青山，朋友们叫我阿青。写代码这件事，是从「能不能让电脑替我做点无聊的事」开始的，后来就停不下来了。</p>
+        <p data-reveal>现在主要在做 <em>AI Agent 的落地</em>：把大模型接进桌面、接进 QQ、接进一个能走动的三维房间，让它真的能干活，而不是只会聊天。</p>
+        <p data-reveal>喜欢那种「点一下，它真的动了」的瞬间。所以作品大多长得不像网站，更像一台机器——有按钮、有面板、有反馈。</p>
+        <p class="about__sign" data-reveal>—— 能跑起来的东西，才算数。</p>
+      </div>
+      <aside class="about__card" data-reveal data-tilt>
+        <div class="about__card-top">
+          <span class="tag">NOW</span>
+          <span class="about__card-dot"></span>
+        </div>
+        <h3>最近在折腾</h3>
+        <ul>
+          <li>给桌面 AI 写插件，让它长出自己的手</li>
+          <li>养一只会自己看通知、回消息的 QQ 助手</li>
+          <li>用 three.js 手搓五间能点开的房间</li>
+          <li>研究怎么把 2D 立绘捏成 3D 的同一个她</li>
+        </ul>
+        <div class="about__card-foot">更新于 2026 · 11</div>
+      </aside>
+    </div>
+    <div class="stats">
+      <div class="stat" data-reveal><b data-count="12">0</b><span>自建插件</span></div>
+      <div class="stat" data-reveal><b data-count="40" data-suffix="+">0</b><span>自动化脚本</span></div>
+      <div class="stat" data-reveal><b data-count="5">0</b><span>间 3D 房间</span></div>
+      <div class="stat" data-reveal><b data-count="999" data-suffix="+">0</b><span>杯咖啡</span></div>
+    </div>
+  </section>
+
+  <!-- WORKS -->
+  <section class="section works" id="works">
+    <div class="section__head">
+      <span class="section__index">02</span>
+      <h2 class="section__title" data-reveal>作品</h2>
+      <p class="section__note" data-reveal>有的上线了，有的只在我电脑里跑。挑几个能说的。</p>
+    </div>
+    <div class="works__grid">
+      <article class="work" data-reveal data-tilt data-cursor="card" data-work="0" tabindex="0">
+        <div class="work__top"><span class="tag">桌面 · 插件</span><span class="work__no">01</span></div>
+        <h3>DeepSeek Harness 插件体系</h3>
+        <p>给桌面 AI 装上真正的手：发 QQ、看房间、读记忆、按时打卡。插件热更新，改一行就生效。</p>
+        <div class="work__tags"><span>TypeScript</span><span>IPC</span><span>插件架构</span></div>
+        <span class="work__more">细节 →</span>
+      </article>
+      <article class="work" data-reveal data-tilt data-cursor="card" data-work="1" tabindex="0">
+        <div class="work__top"><span class="tag">机器人</span><span class="work__no">02</span></div>
+        <h3>小鱼 · QQ 助手</h3>
+        <p>监听 Windows 通知中心抓消息，OCR 认窗口、认标题，把字打进正确的对话框——从头到尾没人扶。</p>
+        <div class="work__tags"><span>PowerShell</span><span>OCR</span><span>自动化</span></div>
+        <span class="work__more">细节 →</span>
+      </article>
+      <article class="work" data-reveal data-tilt data-cursor="card" data-work="2" tabindex="0">
+        <div class="work__top"><span class="tag">WebGL</span><span class="work__no">03</span></div>
+        <h3>小鱼的房间</h3>
+        <p>用 three.js 亲手搭的五间屋：客厅、厨房、卧室、阳台、收藏室。地板能点，家具能点，人也会走过去。</p>
+        <div class="work__tags"><span>three.js</span><span>交互</span><span>3D</span></div>
+        <span class="work__more">细节 →</span>
+      </article>
+      <article class="work" data-reveal data-tilt data-cursor="card" data-work="3" tabindex="0">
+        <div class="work__top"><span class="tag">数据 · 视觉</span><span class="work__no">04</span></div>
+        <h3>用量与余额面板</h3>
+        <p>从会话日志里统计 token 与花费，按官方分时段价算钱，再把账本钉在房间的墙上——抬头就能看见今天花了多少。</p>
+        <div class="work__tags"><span>数据管道</span><span>Canvas</span><span>可视化</span></div>
+        <span class="work__more">细节 →</span>
+      </article>
+      <article class="work" data-reveal data-tilt data-cursor="card" data-work="4" tabindex="0">
+        <div class="work__top"><span class="tag">实验</span><span class="work__no">05</span></div>
+        <h3>粒子文字工坊</h3>
+        <p>你输入什么，几千颗光点就飞过去拼成什么。就在这一页往下滑几屏，自己试试。</p>
+        <div class="work__tags"><span>Shader</span><span>粒子</span><span>交互</span></div>
+        <span class="work__more">去玩 →</span>
+      </article>
+      <article class="work" data-reveal data-tilt data-cursor="card" data-work="5" tabindex="0">
+        <div class="work__top"><span class="tag">工具链</span><span class="work__no">06</span></div>
+        <h3>自动化小工具集</h3>
+        <p>截屏、OCR、窗口归位、语音合成、通知抓取……散落在硬盘里，但每天都在用。</p>
+        <div class="work__tags"><span>工具</span><span>脚本</span><span>日常</span></div>
+        <span class="work__more">细节 →</span>
+      </article>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section class="section skills" id="skills">
+    <div class="section__head">
+      <span class="section__index">03</span>
+      <h2 class="section__title" data-reveal>手艺</h2>
+      <p class="section__note" data-reveal>不是什么精通，只是用得顺手。</p>
+    </div>
+    <div class="skills__grid">
+      <ul class="bars">
+        <li data-reveal><span class="bars__label">自动化 &amp; RPA</span><span class="bars__track"><i data-fill="92"></i></span><span class="bars__val">92</span></li>
+        <li data-reveal><span class="bars__label">TypeScript / Node</span><span class="bars__track"><i data-fill="88"></i></span><span class="bars__val">88</span></li>
+        <li data-reveal><span class="bars__label">大模型应用</span><span class="bars__track"><i data-fill="86"></i></span><span class="bars__val">86</span></li>
+        <li data-reveal><span class="bars__label">Python</span><span class="bars__track"><i data-fill="82"></i></span><span class="bars__val">82</span></li>
+        <li data-reveal><span class="bars__label">three.js / WebGL</span><span class="bars__track"><i data-fill="76"></i></span><span class="bars__val">76</span></li>
+        <li data-reveal><span class="bars__label">界面 / 视觉</span><span class="bars__track"><i data-fill="70"></i></span><span class="bars__val">70</span></li>
+      </ul>
+      <div class="skills__aside" data-reveal>
+        <h3>工具箱</h3>
+        <div class="chips">
+          <span>VS Code</span><span>Node 22</span><span>three.js</span><span>Playwright</span>
+          <span>FFmpeg</span><span>Canvas</span><span>Windows API</span><span>Git</span>
+          <span>Figma</span><span>PowerShell</span><span>Python</span><span>Whisper</span>
+        </div>
+        <blockquote>写代码和捏泥巴差不多：先让轮廓立住，再慢慢修细节。</blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIMELINE -->
+  <section class="section timeline" id="timeline">
+    <div class="section__head">
+      <span class="section__index">04</span>
+      <h2 class="section__title" data-reveal>在路上</h2>
+      <p class="section__note" data-reveal>回头看看，好像一直在同一条路上。</p>
+    </div>
+    <ol class="timeline__list">
+      <li data-reveal>
+        <span class="timeline__year">2024</span>
+        <div><h3>从「能不能自动一下」开始</h3><p>写第一批脚本，让电脑替我做重复的事。学会了 PowerShell 和各种奇怪的窗口坐标。</p></div>
+      </li>
+      <li data-reveal>
+        <span class="timeline__year">2025</span>
+        <div><h3>接上大模型</h3><p>第一次让程序自己读页面、自己决定下一步。那阵子几乎每天都熬到两点。</p></div>
+      </li>
+      <li data-reveal>
+        <span class="timeline__year">2026</span>
+        <div><h3>让它长出身体</h3><p>给 Agent 写插件，给它一间能走动的房间，给它一张自己的脸。现在它会自己发消息了。</p></div>
+      </li>
+      <li data-reveal>
+        <span class="timeline__year">现在</span>
+        <div><h3>把东西做好看一点</h3><p>开始在意「能不能用」，也在意「看着开不开心」。这个页面就是练习。</p></div>
+      </li>
+    </ol>
+  </section>
+
+  <!-- PLAYGROUND -->
+  <section class="section play" id="play">
+    <div class="section__head">
+      <span class="section__index">05</span>
+      <h2 class="section__title" data-reveal>玩一下</h2>
+      <p class="section__note" data-reveal>输入任意文字，光点会飞过去把它拼出来。英文中文都可以。</p>
+    </div>
+    <div class="play__stage" data-reveal>
+      <canvas id="particleCanvas" aria-hidden="true"></canvas>
+      <div class="play__hint" id="playHint">试着输入「青山」</div>
+      <div class="play__form">
+        <input id="particleInput" type="text" maxlength="12" placeholder="输入文字，回车" aria-label="粒子文字内容" autocomplete="off" />
+        <button id="particleGo" class="btn btn--solid btn--sm" type="button">拼出来</button>
+      </div>
+      <div class="play__chips">
+        <button type="button" data-word="青山">青山</button>
+        <button type="button" data-word="小鱼">小鱼</button>
+        <button type="button" data-word="HELLO">HELLO</button>
+        <button type="button" data-word="2026">2026</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="section contact" id="contact">
+    <div class="contact__inner">
+      <p class="eyebrow" data-reveal><span class="eyebrow__dot"></span> 想聊点什么</p>
+      <h2 data-reveal>有想法，<br />就写下来发我。</h2>
+      <p class="contact__lead" data-reveal>合作、提问、或者单纯想吐槽这个页面——都行。我一般当天回。</p>
+      <div class="contact__actions" data-reveal>
+        <a class="btn btn--solid" href="https://wpa.qq.com/msgrd?v=3&amp;uin=3434233147&amp;site=qq&amp;menu=yes" target="_blank" rel="noopener" data-cursor="link" data-magnetic>
+          <span>QQ 3434233147</span>
+        </a>
+        <button class="btn btn--ghost" id="copyMail" type="button" data-copy="3434233147" data-cursor="link">复制 QQ</button>
+      </div>
+      <div class="contact__links" data-reveal>
+        <!-- 拿到 GitHub / Bilibili 主页后，把这两行换回真链接 -->
+        <a href="https://wpa.qq.com/msgrd?v=3&amp;uin=3434233147&amp;site=qq&amp;menu=yes" target="_blank" rel="noopener" data-cursor="link">QQ <span>↗</span></a>
+        <a href="#works" data-cursor="link">先看看作品 <span>↘</span></a>
+      </div>
+    </div>
+    <div class="contact__glow" aria-hidden="true"></div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="footer__left">
+    <span class="footer__mark">青</span>
+    <span>© 2026 青山 · 用 three.js 和一点点执念手写</span>
+  </div>
+  <div class="footer__right">
+    <a href="#top" data-cursor="link">回到顶部 ↑</a>
+  </div>
+</footer>
+
+
+<!-- 作品细节 -->
+<div class="modal" id="workModal" hidden>
+  <div class="modal__box" role="dialog" aria-modal="true" aria-labelledby="workTitle">
+    <button class="modal__close" id="workClose" type="button" aria-label="关闭">×</button>
+    <p class="modal__kicker" id="workKicker"></p>
+    <h3 class="modal__title" id="workTitle"></h3>
+    <p class="modal__body" id="workBody"></p>
+    <ul class="modal__list" id="workList"></ul>
+    <div class="modal__tags" id="workTags"></div>
+  </div>
+</div>
+
+<!-- 命令面板 -->
+<div class="palette" id="palette" role="dialog" aria-modal="true" aria-label="命令面板" hidden>
+  <div class="palette__box">
+    <input id="paletteInput" type="text" placeholder="去哪里？输入 关于 / 作品 / 玩一下 …" autocomplete="off" />
+    <ul id="paletteList"></ul>
+    <div class="palette__foot"><span>↑↓ 选择</span><span>↵ 跳转</span><span>ESC 关闭</span></div>
+  </div>
+</div>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "./js/vendor/three.module.js"
+  }
+}
+</script>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
